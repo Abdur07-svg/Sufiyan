@@ -1,0 +1,723 @@
+/* ==========================================================================
+   🎂 REALISTIC INTERACTIVE BIRTHDAY SURPRISE — STYLING
+   Full-screen Scene-by-Scene Architecture (100vw x 100dvh)
+   Zero Scrolling • No Card Boxes • Typewritten Stationery Letter
+   ========================================================================== */
+
+:root {
+  --bg-cream: #faf7f5;
+  --bg-blush: #fff1f5;
+  --bg-paper: #fffdfa;
+  
+  --color-primary: #e11d48;
+  --color-rose: #f43f5e;
+  --color-pink-soft: #fda4af;
+  --color-peach: #fb923c;
+  --color-lavender: #c084fc;
+  --color-gold: #f59e0b;
+  
+  --text-main: #2b2228;
+  --text-muted: #756670;
+  --border-soft: rgba(244, 114, 182, 0.25);
+  
+  /* Tactile Shadow Tokens */
+  --shadow-btn: 0 8px 20px rgba(244, 63, 94, 0.28), 0 2px 4px rgba(0, 0, 0, 0.06);
+  --shadow-btn-active: 0 3px 8px rgba(244, 63, 94, 0.35);
+  --shadow-paper: 0 20px 50px rgba(225, 29, 72, 0.09), 0 4px 12px rgba(0, 0, 0, 0.04);
+  --shadow-asset: 0 16px 36px rgba(244, 63, 94, 0.2);
+  
+  --font-calligraphy: 'Great Vibes', cursive;
+  --font-handwriting: 'Caveat', cursive, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-heading: 'Outfit', sans-serif;
+
+  --radius-sm: 14px;
+  --radius-md: 22px;
+  --radius-lg: 32px;
+  --radius-full: 9999px;
+  
+  --transition-fast: 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-smooth: 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* STRICT ZERO-SCROLL VIEWPORT FIXATION */
+html, body {
+  width: 100vw;
+  height: 100dvh;
+  min-height: 100%;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  background-color: var(--bg-cream);
+  background-image: 
+    radial-gradient(circle at 10% 10%, rgba(255, 228, 230, 0.7) 0%, transparent 45%),
+    radial-gradient(circle at 90% 10%, rgba(254, 243, 199, 0.5) 0%, transparent 45%),
+    radial-gradient(circle at 50% 50%, rgba(253, 242, 248, 0.8) 0%, transparent 55%),
+    radial-gradient(circle at 90% 90%, rgba(243, 232, 255, 0.6) 0%, transparent 45%),
+    radial-gradient(circle at 10% 90%, rgba(255, 237, 213, 0.5) 0%, transparent 45%);
+  color: var(--text-main);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Celebration Canvas Overlay */
+#celebration-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100dvh;
+  z-index: 100;
+  pointer-events: none;
+}
+
+/* Cinematic Scene Transition Curtain */
+.cinematic-transition-curtain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100dvh;
+  z-index: 90;
+  pointer-events: none;
+  opacity: 0;
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+  background: radial-gradient(circle at center, rgba(255, 240, 245, 0.95), rgba(255, 228, 235, 0.98));
+  transition: opacity 0.5s ease;
+}
+
+.cinematic-transition-curtain.wiping {
+  opacity: 1;
+  pointer-events: auto;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/* Small Elegant Floating Music Control */
+.top-nav-bar {
+  position: fixed;
+  top: 14px;
+  right: 16px;
+  z-index: 85;
+  pointer-events: none;
+}
+
+.music-control-btn {
+  pointer-events: auto;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(244, 114, 182, 0.35);
+  color: var(--color-primary);
+  padding: 6px 13px;
+  border-radius: var(--radius-full);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(225, 29, 72, 0.08);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.25s ease;
+  user-select: none;
+}
+
+.music-control-btn:active {
+  transform: scale(0.93);
+}
+
+.music-control-btn.muted {
+  color: var(--text-muted);
+  border-color: rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.75);
+  opacity: 0.8;
+}
+
+.music-control-btn .music-icon {
+  font-size: 0.88rem;
+  display: inline-block;
+  transition: transform 0.25s ease;
+}
+
+.music-control-btn:not(.muted) .music-icon {
+  animation: musicNoteWiggle 2.5s ease-in-out infinite;
+}
+
+@keyframes musicNoteWiggle {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(-8deg) scale(1.1); }
+  75% { transform: rotate(8deg) scale(1.1); }
+}
+
+/* ==========================================================================
+   SCENE VIEWPORT & NATURAL FULL-SCREEN STAGES (NO CARD BOXES)
+   ========================================================================== */
+.scene-viewport {
+  width: 100vw;
+  height: 100dvh;
+  position: relative;
+  overflow: hidden;
+}
+
+.scene-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100dvh;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px 30px;
+  opacity: 0;
+  transform: scale(0.94);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.scene-layer.active {
+  display: flex;
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Natural Scene Flow (Objects Float Directly on Full-Screen Background) */
+.scene-natural-stage {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+
+/* TACTILE REALISTIC BUTTONS */
+.tactile-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(180deg, #fb7185 0%, #f43f5e 45%, #e11d48 100%);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: var(--radius-full);
+  padding: 15px 38px;
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  box-shadow: var(--shadow-btn);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+  position: relative;
+  overflow: hidden;
+  margin-top: 22px;
+}
+
+.tactile-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 100%);
+  border-radius: var(--radius-full) var(--radius-full) 0 0;
+  pointer-events: none;
+}
+
+.tactile-btn:active {
+  transform: scale(0.95) translateY(2px);
+  box-shadow: var(--shadow-btn-active);
+  filter: brightness(0.96);
+}
+
+/* ==========================================================================
+   SCENE 1: OPENING BIRTHDAY (birthday_cake.png)
+   ========================================================================== */
+.cake-png-wrapper {
+  margin-bottom: 16px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cake-png-img {
+  width: 155px;
+  height: 155px;
+  max-width: 100%;
+  object-fit: contain;
+  filter: drop-shadow(var(--shadow-asset));
+  animation: floatCake 4s ease-in-out infinite alternate;
+}
+
+@keyframes floatCake {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-8px); }
+}
+
+.calligraphy-title {
+  font-family: var(--font-calligraphy);
+  font-size: clamp(3.2rem, 8vw, 4.6rem);
+  font-weight: 400;
+  color: var(--color-primary);
+  line-height: 1.15;
+  margin-bottom: 6px;
+  text-shadow: 0 2px 10px rgba(244, 63, 94, 0.15);
+}
+
+.serif-subtitle {
+  font-family: var(--font-serif);
+  font-size: clamp(1rem, 2.8vw, 1.25rem);
+  font-style: italic;
+  color: var(--text-muted);
+  line-height: 1.55;
+  max-width: 340px;
+}
+
+/* ==========================================================================
+   SCENE 2: REALISTIC 3D GLOSSY BALLOON
+   ========================================================================== */
+.balloon-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  margin: 18px auto 12px;
+  position: relative;
+  user-select: none;
+}
+
+.balloon-svg-box {
+  width: 120px;
+  height: 155px;
+  filter: drop-shadow(0 18px 30px rgba(244, 63, 94, 0.32));
+  animation: swayBalloon 3.5s ease-in-out infinite alternate;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.balloon-stage:active .balloon-svg-box {
+  transform: scale(0.92);
+}
+
+@keyframes swayBalloon {
+  0% { transform: translateY(0) rotate(-3deg); }
+  100% { transform: translateY(-14px) rotate(3deg); }
+}
+
+.balloon-string-svg {
+  width: 2px;
+  height: 55px;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.05));
+  margin-top: 4px;
+}
+
+.balloon-pop-burst {
+  display: none;
+  font-family: var(--font-calligraphy);
+  font-size: 3rem;
+  color: var(--color-primary);
+  animation: popScale 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes popScale {
+  0% { transform: scale(0.3); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ==========================================================================
+   SCENE 3: MAKE A WISH (birthday_cake.png & interactive candle)
+   ========================================================================== */
+.cake-wish-stage {
+  margin: 12px auto 16px;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cake-wish-container {
+  width: 165px;
+  height: 165px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cake-wish-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(var(--shadow-asset));
+}
+
+.candle-flame-real {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 16px;
+  height: 26px;
+  background: radial-gradient(ellipse at center bottom, #ffffff 10%, #fef08a 40%, #f97316 85%, transparent 100%);
+  border-radius: 50% 50% 20% 20%;
+  box-shadow: 0 0 20px rgba(251, 191, 36, 1), 0 0 35px rgba(249, 115, 22, 0.7);
+  animation: candleRealFlicker 1.4s infinite alternate ease-in-out;
+  transition: opacity 0.4s, transform 0.4s;
+  pointer-events: none;
+  z-index: 10;
+}
+
+@keyframes candleRealFlicker {
+  0% { transform: translateX(-50%) scale(1) rotate(-2deg); }
+  50% { transform: translateX(-50%) scale(1.08, 0.95) rotate(1deg); }
+  100% { transform: translateX(-50%) scale(0.96, 1.05) rotate(-1deg); }
+}
+
+.candle-flame-real.blown-out {
+  opacity: 0;
+  transform: translateX(-50%) scale(0.1);
+}
+
+.candle-smoke-puff {
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 20px;
+  opacity: 0;
+  pointer-events: none;
+  font-size: 1.3rem;
+  z-index: 10;
+}
+
+.candle-smoke-puff.show {
+  animation: smokeRise 1.2s ease-out forwards;
+}
+
+@keyframes smokeRise {
+  0% { opacity: 0.8; transform: translateX(-50%) scale(0.4); }
+  100% { opacity: 0; transform: translateX(-60%) translateY(-35px) scale(1.6); }
+}
+
+.wish-reveal-box {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  margin-top: 8px;
+}
+
+.wish-reveal-box.active {
+  display: block;
+  opacity: 1;
+}
+
+/* ==========================================================================
+   SCENE 4: FLOWER REVEAL (flower_bouquet.png)
+   ========================================================================== */
+.bouquet-png-stage {
+  margin: 14px auto 16px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bouquet-png-img {
+  width: 170px;
+  height: 170px;
+  max-width: 100%;
+  object-fit: contain;
+  filter: drop-shadow(var(--shadow-asset));
+  animation: bouquetBloom 3.5s infinite ease-in-out alternate;
+}
+
+@keyframes bouquetBloom {
+  0% { transform: scale(1) rotate(-3deg); }
+  100% { transform: scale(1.08) rotate(3deg); }
+}
+
+/* ==========================================================================
+   SCENE 5: ENVELOPE OPENING (sealed_envelope.png & opened_envelope.png)
+   ========================================================================== */
+.envelope-png-stage {
+  width: 220px;
+  height: 165px;
+  position: relative;
+  cursor: pointer;
+  margin: 20px auto 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.envelope-png-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(var(--shadow-asset));
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.envelope-png-stage:active .envelope-png-img {
+  transform: scale(0.95);
+}
+
+.envelope-opened-png {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.envelope-png-stage.opened .envelope-sealed-png {
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+.envelope-png-stage.opened .envelope-opened-png {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+/* ==========================================================================
+   SCENE 6: PHYSICAL STATIONERY LETTER & TYPEWRITER REVEAL
+   ========================================================================== */
+.stationery-letter-card {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  background: var(--bg-paper);
+  border-radius: var(--radius-md);
+  padding: 32px 24px;
+  border: 1px solid rgba(244, 114, 182, 0.28);
+  box-shadow: var(--shadow-paper);
+  text-align: left;
+  max-height: 68dvh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.stationery-floral-accent {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+.stationery-heading {
+  font-family: var(--font-calligraphy);
+  font-size: 2.6rem;
+  color: var(--color-primary);
+  line-height: 1.1;
+  margin-bottom: 16px;
+}
+
+/* Typewritten message box */
+.typewriter-content-box {
+  font-family: var(--font-serif);
+  font-size: clamp(1rem, 2.8vw, 1.12rem);
+  color: var(--text-main);
+  line-height: 1.8;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+/* Blinking Writing Cursor */
+.typing-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.15em;
+  background-color: var(--color-rose);
+  vertical-align: -0.15em;
+  margin-left: 2px;
+  animation: blinkCursor 0.75s infinite ease-in-out;
+}
+
+@keyframes blinkCursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* ==========================================================================
+   SCENE 7: FINAL BIRTHDAY SCENE (ELEGANT PHOTO FRAME)
+   ========================================================================== */
+.final-stage-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Photo Frame Container & Reveal Animation */
+.final-photo-frame-wrapper {
+  margin-bottom: 14px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 1000px;
+}
+
+.final-photo-frame {
+  position: relative;
+  background: #ffffff;
+  padding: 8px 8px 12px;
+  border-radius: 16px;
+  border: 1px solid rgba(244, 114, 182, 0.35);
+  box-shadow: 
+    0 16px 36px rgba(225, 29, 72, 0.12),
+    0 4px 12px rgba(0, 0, 0, 0.04),
+    inset 0 1px 2px rgba(255, 255, 255, 0.9);
+  transition: transform 0.4s ease;
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+/* Triggered when Scene 7 becomes active */
+.scene-layer.active .final-photo-frame {
+  animation: photoFrameReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
+}
+
+@keyframes photoFrameReveal {
+  0% {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+    box-shadow: 0 4px 12px rgba(225, 29, 72, 0.04);
+  }
+  50% {
+    box-shadow: 0 20px 45px rgba(225, 29, 72, 0.18), 0 0 25px rgba(253, 164, 175, 0.35);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    box-shadow: 0 16px 36px rgba(225, 29, 72, 0.12), 0 4px 12px rgba(0, 0, 0, 0.04);
+  }
+}
+
+/* Inner Matting / Printed Photo Border */
+.photo-matting {
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  background: #fdfaf7;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Sister Photo: Preserves natural aspect ratio & ensures clear face visibility */
+.sister-photo-img {
+  width: min(65vw, 210px);
+  height: min(78vw, 255px);
+  max-height: 38dvh;
+  object-fit: cover;
+  object-position: center 15%;
+  display: block;
+  border-radius: 6px;
+  pointer-events: none;
+}
+
+/* Subtle delicate floral corner accents */
+.frame-corner-decor {
+  position: absolute;
+  font-size: 1.15rem;
+  pointer-events: none;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.12));
+  z-index: 5;
+  animation: gentleFloralPulse 3s ease-in-out infinite alternate;
+}
+
+.frame-decor-tl {
+  top: -8px;
+  left: -8px;
+}
+
+.frame-decor-br {
+  bottom: -6px;
+  right: -6px;
+}
+
+@keyframes gentleFloralPulse {
+  0% { transform: scale(1) rotate(0deg); }
+  100% { transform: scale(1.1) rotate(6deg); }
+}
+
+/* Delayed smooth reveals for heading and text */
+.final-heading-reveal {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.scene-layer.active .final-heading-reveal {
+  animation: finalFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+}
+
+.final-message-reveal {
+  opacity: 0;
+  transform: translateY(8px);
+  margin-bottom: 6px;
+}
+
+.scene-layer.active .final-message-reveal {
+  animation: finalFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.75s forwards;
+}
+
+@keyframes finalFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.final-signature {
+  font-family: var(--font-calligraphy);
+  font-size: 2.1rem;
+  color: var(--color-rose);
+  margin-top: 4px;
+  margin-bottom: 12px;
+  opacity: 0;
+}
+
+.scene-layer.active .final-signature {
+  animation: finalFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.95s forwards;
+}
+
+/* Responsive polish for smaller mobile screens */
+@media (max-width: 380px) {
+  .cake-png-img { width: 130px; height: 130px; }
+  .stationery-letter-card { padding: 24px 18px; }
+  .typewriter-content-box { font-size: 0.95rem; line-height: 1.65; }
+  .sister-photo-img { width: 185px; height: 220px; }
+  .calligraphy-title { font-size: 2.8rem; }
+  .serif-subtitle { font-size: 0.95rem; }
+  .tactile-btn { padding: 12px 26px; font-size: 0.95rem; }
+}

@@ -1,628 +1,200 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>সোনার বাংলা লাঞ্চবক্স | হোম-স্টাইল টিফিন সার্ভিস</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root {
-            --primary: #1a5c1a; --primary-dark: #0f3d0f; --secondary: #c75b00;
-            --accent: #e8a317; --cream: #fdf8f0; --light-green: #e8f5e0;
-            --light-yellow: #fff9c4;
-            --text: #2d2d2d; --text-light: #666;
-        }
-        body {
-            font-family: 'Noto Sans Bengali', 'Poppins', sans-serif;
-            background: var(--cream); color: var(--text); overflow-x: hidden;
-        }
-        .navbar {
-            position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
-            background: rgba(255,249,196,0.95); backdrop-filter: blur(15px);
-            box-shadow: 0 2px 20px rgba(0,0,0,0.1); padding: 0.6rem 2rem;
-            transition: all 0.3s ease;
-        }
-        .navbar.scrolled { padding: 0.4rem 2rem; background: rgba(255,249,196,0.98); box-shadow: 0 4px 30px rgba(0,0,0,0.15); }
-        .nav-container { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
-        .nav-logo { display: flex; align-items: center; gap: 0.8rem; text-decoration: none; }
-        .nav-logo-icon { width: 45px; height: 45px; background: linear-gradient(135deg, var(--primary), #2d7a2d); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.3rem; box-shadow: 0 4px 15px rgba(26,92,26,0.3); }
-        .nav-logo-text { display: flex; flex-direction: column; }
-        .nav-logo-text .brand-name { font-family: 'Noto Sans Bengali', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--primary); line-height: 1.2; }
-        .nav-logo-text .brand-tag { font-size: 0.65rem; color: var(--secondary); font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
-        .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
-        .nav-links a { text-decoration: none; color: var(--text); font-weight: 500; font-size: 0.95rem; transition: color 0.3s ease; position: relative; font-family: 'Noto Sans Bengali', sans-serif; }
-        .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--primary); transition: width 0.3s ease; }
-        .nav-links a:hover { color: var(--primary); }
-        .nav-links a:hover::after { width: 100%; }
-        .nav-cta { display: flex; align-items: center; gap: 0.5rem; background: var(--primary); color: white; padding: 0.5rem 1.2rem; border-radius: 50px; text-decoration: none; font-weight: 600; font-size: 0.85rem; transition: all 0.3s ease; font-family: 'Noto Sans Bengali', sans-serif; }
-        .nav-cta:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(26,92,26,0.3); }
-        .nav-toggle { display: none; background: none; border: none; font-size: 1.5rem; color: var(--primary); cursor: pointer; }
-        @media (max-width: 768px) {
-            .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--light-yellow); flex-direction: column; padding: 1.5rem; gap: 1.2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-            .nav-links.active { display: flex; }
-            .nav-toggle { display: block; }
-            .nav-cta { display: none; }
-        }
-        .hero { min-height: 100vh; background: linear-gradient(135deg, var(--primary) 0%, #2d7a2d 50%, var(--primary-dark) 100%); position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; padding-top: 80px; }
-        .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); opacity: 0.5; }
-        .hero-content { text-align: center; z-index: 2; padding: 2rem; max-width: 900px; }
-        .hero-logo-main { width: 220px; height: 220px; margin: 0 auto 1.5rem; border-radius: 50%; overflow: hidden; border: 5px solid var(--accent); box-shadow: 0 20px 60px rgba(0,0,0,0.4); animation: float 3s ease-in-out infinite; background: var(--light-yellow); display: flex; align-items: center; justify-content: center; }
-        .hero-logo-main img { width: 100%; height: 100%; object-fit: cover; }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
-        .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 6vw, 4.5rem); color: white; margin-bottom: 0.5rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.2); }
-        .hero .subtitle { font-size: clamp(1.2rem, 3vw, 1.8rem); color: #a8e6a8; font-weight: 500; margin-bottom: 1rem; }
-        .hero .tagline { font-size: 1.3rem; color: rgba(255,255,255,0.95); font-style: italic; margin-bottom: 0.5rem; font-family: 'Noto Sans Bengali', sans-serif; }
-        .hero .tagline-en { font-size: 0.95rem; color: rgba(255,255,255,0.7); margin-bottom: 2rem; }
-        .badges { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem; }
-        .badge { background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); padding: 0.6rem 1.2rem; border-radius: 50px; color: white; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; }
-        .cta-btn { display: inline-flex; align-items: center; gap: 0.8rem; background: var(--accent); color: var(--primary-dark); padding: 1rem 2.5rem; border-radius: 50px; font-size: 1.1rem; font-weight: 700; text-decoration: none; box-shadow: 0 10px 30px rgba(0,0,0,0.3); transition: all 0.3s ease; border: none; cursor: pointer; }
-        .cta-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(0,0,0,0.4); background: #ffd700; }
-        .scroll-down { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); color: white; font-size: 2rem; animation: bounce 2s infinite; cursor: pointer; }
-        @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); } 40% { transform: translateX(-50%) translateY(-15px); } 60% { transform: translateX(-50%) translateY(-8px); } }
-        .features { padding: 5rem 2rem; background: var(--light-yellow); }
-        .container { max-width: 1200px; margin: 0 auto; }
-        .section-title { text-align: center; margin-bottom: 3rem; }
-        .section-title h2 { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--primary); margin-bottom: 0.5rem; }
-        .section-title p { color: var(--text-light); font-size: 1.1rem; }
-        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
-        .feature-card { background: var(--light-green); padding: 2rem; border-radius: 20px; text-align: center; transition: all 0.3s ease; border: 2px solid transparent; }
-        .feature-card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: 0 15px 40px rgba(26,92,26,0.1); }
-        .feature-icon { width: 70px; height: 70px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.2rem; color: white; font-size: 1.8rem; }
-        .feature-card h3 { font-size: 1.2rem; color: var(--primary-dark); margin-bottom: 0.5rem; }
-        .feature-card p { color: var(--text-light); font-size: 0.95rem; }
-        .menu-section { padding: 5rem 2rem; background: #ffead0; }
-        .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
-        .menu-card { background: #fffde7; border-radius: 24px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.08); transition: all 0.4s ease; position: relative; cursor: pointer; }
-        .menu-card:hover { transform: translateY(-8px); box-shadow: 0 20px 60px rgba(0,0,0,0.15); }
-        .menu-card .click-hint { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(26,92,26,0.9); color: white; padding: 0.6rem 1.2rem; border-radius: 50px; font-size: 0.85rem; font-weight: 600; opacity: 0; transition: all 0.3s ease; z-index: 10; pointer-events: none; white-space: nowrap; }
-        .menu-card:hover .click-hint { opacity: 1; }
-        .menu-img { height: 220px; position: relative; background: linear-gradient(135deg, #f0f0f0, #e0e0e0); display: flex; align-items: center; justify-content: center; font-size: 4rem; overflow: hidden; }
-        .menu-img img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: 1; transition: transform 0.5s ease; }
-        .menu-card:hover .menu-img img { transform: scale(1.1); }
-        .menu-img::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 60px; background: linear-gradient(to top, white, transparent); z-index: 2; }
-        .day-badge { position: absolute; top: 1rem; left: 1rem; padding: 0.5rem 1.2rem; border-radius: 50px; font-weight: 700; font-size: 0.85rem; color: white; z-index: 3; }
-        .mon { background: var(--primary); } .tue { background: var(--accent); color: var(--primary-dark); } .wed { background: #e74c3c; } .thu { background: #2980b9; } .fri { background: #8e44ad; } .sat { background: #c0392b; }
-        .menu-info { padding: 1.5rem; }
-        .menu-info h3 { font-size: 1.4rem; color: var(--primary-dark); margin-bottom: 0.3rem; font-family: 'Playfair Display', serif; }
-        .menu-info .bengali-name { color: var(--secondary); font-size: 1.1rem; font-weight: 600; font-family: 'Noto Sans Bengali', sans-serif; }
-        .menu-info .desc { color: var(--text-light); font-size: 0.9rem; margin-top: 0.5rem; line-height: 1.5; }
-        .menu-tags { display: flex; gap: 0.5rem; margin-top: 1rem; flex-wrap: wrap; }
-        .tag { padding: 0.3rem 0.8rem; background: var(--light-green); color: var(--primary); border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
-        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); z-index: 10000; display: none; align-items: center; justify-content: center; padding: 1rem; opacity: 0; transition: opacity 0.3s ease; }
-        .modal-overlay.active { display: flex; opacity: 1; }
-        .modal-content { background: var(--light-yellow); border-radius: 24px; max-width: 600px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative; transform: scale(0.9) translateY(20px); transition: transform 0.3s ease; box-shadow: 0 30px 80px rgba(0,0,0,0.4); }
-        .modal-overlay.active .modal-content { transform: scale(1) translateY(0); }
-        .modal-header { position: relative; height: 220px; overflow: hidden; border-radius: 24px 24px 0 0; }
-        .modal-header img { width: 100%; height: 100%; object-fit: cover; }
-        .modal-header::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 100px; background: linear-gradient(to top, white, transparent); }
-        .modal-close { position: absolute; top: 1rem; right: 1rem; width: 40px; height: 40px; background: rgba(255,249,196,0.9); border: none; border-radius: 50%; font-size: 1.2rem; color: var(--primary-dark); cursor: pointer; z-index: 10; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
-        .modal-close:hover { background: var(--light-yellow); transform: rotate(90deg); }
-        .modal-body { padding: 0 2rem 2rem; margin-top: -30px; position: relative; z-index: 2; }
-        .modal-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--primary-dark); margin-bottom: 0.2rem; }
-        .modal-bengali { color: var(--secondary); font-size: 1.2rem; font-weight: 600; font-family: 'Noto Sans Bengali', sans-serif; margin-bottom: 1rem; }
-        .modal-section { margin-bottom: 1.5rem; }
-        .modal-section-title { font-size: 1rem; font-weight: 700; color: var(--primary); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.5rem; }
-        .ingredients-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0.8rem; }
-        .ingredient-item { display: flex; align-items: center; gap: 0.8rem; padding: 0.6rem 1rem; background: var(--light-green); border-radius: 12px; font-size: 0.9rem; color: var(--text); box-shadow: 0 2px 8px rgba(0,0,0,0.05); transition: transform 0.2s ease; }
-        .ingredient-item:hover { transform: translateX(5px); background: #dff0d8; }
-        .ingredient-img { width: 35px; height: 35px; object-fit: contain; border-radius: 6px; background: white; padding: 2px; flex-shrink: 0; }
-        .nutrition-box { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; padding: 1rem 1.5rem; border-radius: 16px; font-size: 0.95rem; }
-        .info-row { display: flex; align-items: center; gap: 0.8rem; padding: 0.6rem 0; border-bottom: 1px solid #eee; font-size: 0.95rem; }
-        .info-row:last-child { border-bottom: none; }
-        .info-row i { color: var(--accent); font-size: 1.1rem; width: 24px; }
-        .special-note { background: linear-gradient(135deg, #fff8e1, #ffecb3); border-left: 4px solid var(--accent); padding: 1rem 1.2rem; border-radius: 0 12px 12px 0; font-size: 0.95rem; color: var(--text); line-height: 1.6; }
-        .modal-cta { display: flex; gap: 1rem; margin-top: 1.5rem; }
-        .modal-cta a { flex: 1; display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.9rem; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 0.95rem; transition: all 0.3s ease; }
-        .modal-cta .btn-whatsapp { background: #25D366; color: white; }
-        .modal-cta .btn-whatsapp:hover { background: #1da851; transform: translateY(-2px); }
-        .modal-cta .btn-call { background: var(--primary); color: white; }
-        .modal-cta .btn-call:hover { background: var(--primary-dark); transform: translateY(-2px); }
-        .pricing-section { padding: 5rem 2rem; background: linear-gradient(135deg, var(--primary-dark), var(--primary)); color: white; text-align: center; }
-        .pricing-section .section-title h2 { color: white; }
-        .pricing-section .section-title p { color: rgba(255,255,255,0.8); }
-        .price-highlight { display: inline-flex; align-items: baseline; gap: 0.5rem; background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); padding: 1.5rem 3rem; border-radius: 20px; border: 2px solid var(--accent); margin-bottom: 2rem; }
-        .price-highlight .currency { font-size: 2rem; font-weight: 700; color: var(--accent); }
-        .price-highlight .amount { font-size: 4rem; font-weight: 800; color: white; line-height: 1; }
-        .price-highlight .period { font-size: 1.2rem; color: rgba(255,255,255,0.8); }
-        .plans-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; max-width: 800px; margin: 2rem auto 0; }
-        .plan-card { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; padding: 2rem; transition: all 0.3s ease; cursor: pointer; }
-        .plan-card:hover { background: rgba(255,255,255,0.2); transform: translateY(-5px); }
-        .plan-card.featured { border: 2px solid var(--accent); position: relative; }
-        .plan-card.featured::before { content: 'জনপ্রিয়'; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--accent); color: var(--primary-dark); padding: 0.3rem 1.5rem; border-radius: 20px; font-size: 0.8rem; font-weight: 700; font-family: 'Noto Sans Bengali', sans-serif; }
-        .plan-card h3 { font-size: 1.5rem; margin-bottom: 0.5rem; }
-        .plan-card .plan-price { font-size: 2.5rem; font-weight: 800; color: var(--accent); margin-bottom: 1rem; }
-        .plan-card ul { list-style: none; text-align: left; margin: 1.5rem 0; }
-        .plan-card ul li { padding: 0.5rem 0; display: flex; align-items: center; gap: 0.5rem; font-size: 0.95rem; }
-        .plan-card ul li i { color: var(--accent); }
-        .why-us { padding: 5rem 2rem; background: var(--light-yellow); }
-        .benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
-        .benefit-item { display: flex; align-items: flex-start; gap: 1rem; padding: 1.5rem; background: var(--light-green); border-radius: 16px; }
-        .benefit-item i { font-size: 1.5rem; color: var(--primary); margin-top: 0.2rem; }
-        .benefit-item h4 { font-size: 1rem; color: var(--primary-dark); margin-bottom: 0.3rem; }
-        .benefit-item p { font-size: 0.85rem; color: var(--text-light); }
-        .contact-section { padding: 5rem 2rem 2rem; background: linear-gradient(135deg, var(--primary-dark), #0a2a0a); color: white; }
-        .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 3rem; max-width: 1100px; margin: 0 auto; }
-        .contact-block h3 { font-size: 1.3rem; margin-bottom: 1.5rem; color: var(--accent); display: flex; align-items: center; gap: 0.8rem; }
-        .contact-item { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.2rem; padding: 1rem; background: rgba(255,255,255,0.05); border-radius: 12px; transition: all 0.3s ease; text-decoration: none; color: white; }
-        .contact-item:hover { background: rgba(255,255,255,0.1); transform: translateX(5px); }
-        .contact-item i { width: 40px; height: 40px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
-        .contact-item .info h4 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.2rem; }
-        .contact-item .info p { font-size: 0.85rem; color: rgba(255,255,255,0.7); }
-        .social-links { display: flex; gap: 1rem; margin-top: 1.5rem; }
-        .social-links a { width: 45px; height: 45px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; transition: all 0.3s ease; text-decoration: none; }
-        .social-links a:hover { background: var(--accent); color: var(--primary-dark); transform: translateY(-3px); }
-        .footer-bottom { text-align: center; padding: 2rem; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.6); font-size: 0.9rem; }
-        .footer-bottom .heart { color: #e74c3c; animation: heartbeat 1.5s ease-in-out infinite; }
-        @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
-        .floating-cta { position: fixed; bottom: 2rem; right: 2rem; z-index: 1000; display: flex; flex-direction: column; gap: 0.8rem; }
-        .float-btn { width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; box-shadow: 0 5px 20px rgba(0,0,0,0.3); transition: all 0.3s ease; text-decoration: none; border: none; cursor: pointer; }
-        .float-btn.whatsapp { background: #25D366; } .float-btn.call { background: #3498db; }
-        .float-btn:hover { transform: scale(1.1) rotate(5deg); }
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2.2rem; } .hero-logo-main { width: 160px; height: 160px; } .price-highlight .amount { font-size: 3rem; }
-            .floating-cta { bottom: 1rem; right: 1rem; } .float-btn { width: 50px; height: 50px; font-size: 1.3rem; }
-            .modal-content { margin: 0.5rem; } .modal-body { padding: 0 1.2rem 1.5rem; } .ingredients-list { grid-template-columns: 1fr; } .modal-cta { flex-direction: column; }
-        }
-        .fade-in { opacity: 0; transform: translateY(30px); transition: all 0.6s ease; }
-        .fade-in.visible { opacity: 1; transform: translateY(0); }
-        body.modal-open { overflow: hidden; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Happy Birthday, Didi! ❤️ | A Special Surprise</title>
+  <meta name="description" content="A magical interactive birthday surprise made specially for my elder sister.">
+  <meta name="theme-color" content="#fff0f4">
 
-        /* Order Modal Specific Styles */
-        .order-modal-content { max-width: 400px !important; }
-        .order-modal-body { text-align: center; padding: 2rem !important; margin-top: 0 !important; }
-        .order-modal-title { margin-bottom: 0.5rem; font-family: 'Playfair Display', serif; color: var(--primary-dark); }
-        .order-modal-plan { font-size: 1.2rem; color: var(--secondary); font-weight: 600; margin-bottom: 1.5rem; }
-        .btn-order-whatsapp { background: #25D366; color: white; display: flex; align-items: center; justify-content: center; gap: 0.8rem; padding: 1.2rem; border-radius: 12px; text-decoration: none; font-weight: 700; transition: all 0.3s ease; margin-bottom: 1rem; }
-        .btn-order-whatsapp:hover { background: #1da851; transform: translateY(-3px); box-shadow: 0 5px 15px rgba(37,211,102,0.3); }
-        .btn-order-call { background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; gap: 0.8rem; padding: 1.2rem; border-radius: 12px; text-decoration: none; font-weight: 700; transition: all 0.3s ease; }
-        .btn-order-call:hover { background: var(--primary-dark); transform: translateY(-3px); box-shadow: 0 5px 15px rgba(26,92,26,0.3); }
-    
-    </style>
-    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="images/favicon-192.png">
-  <link rel="apple-touch-icon" href="images/favicon-180.png">
-  <meta name="theme-color" content="#0a0a0a">
-<base target="_blank">
-<base target="_blank">
+  <!-- Typography: Calligraphy Heading + Soft Readable Serif + Modern Body -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Great+Vibes&family=Playfair+Display:ital,wght@0,500;0,600;1,400;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <nav class="navbar" id="navbar">
-        <div class="nav-container">
-            <a href="#" class="nav-logo">
-                <div class="nav-logo-icon" style="padding: 0; overflow: hidden; background: transparent; box-shadow: none;">
-                    <img src="images/Sonar Bangla Lunchbox1.jpeg" alt="Sonar Bangla Logo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;">
-                </div>
-                <div class="nav-logo-text">
-                    <span class="brand-name">সোনার বাংলা</span>
-                    <span class="brand-tag">Lunchbox Delivery</span>
-                </div>
-            </a>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#features">বৈশিষ্ট্য</a></li>
-                <li><a href="#menu">মেনু</a></li>
-                <li><a href="#pricing">মূল্য</a></li>
-                <li><a href="#contact">যোগাযোগ</a></li>
-            </ul>
-            <a href="https://wa.me/919907846767" class="nav-cta" target="_blank"><i class="fab fa-whatsapp"></i> অর্ডার করুন</a>
-            <button class="nav-toggle" id="navToggle"><i class="fas fa-bars"></i></button>
+
+  <!-- Falling Flower Petals & Paper Confetti Canvas -->
+  <canvas id="celebration-canvas"></canvas>
+
+  <!-- Cinematic Scene Transition Curtain -->
+  <div class="cinematic-transition-curtain" id="cinematic-transition"></div>
+
+  <!-- Small Elegant Floating Music On/Off Control -->
+  <header class="top-nav-bar">
+    <button class="nav-pill-btn music-control-btn" id="music-control-btn" aria-label="Toggle background music">
+      <span class="music-icon" id="music-icon">🎵</span>
+      <span class="music-txt" id="music-txt">Music On</span>
+    </button>
+  </header>
+
+  <!-- Fullscreen Scene Viewport (100vw x 100dvh) -->
+  <div class="scene-viewport">
+
+    <!-- ====================================================================
+         SCENE 1: BIRTHDAY OPENING (birthday_cake.png)
+         ==================================================================== -->
+    <section class="scene-layer active" id="scene-1">
+      <div class="scene-natural-stage">
+        <div class="cake-png-wrapper">
+          <img src="assets/birthday_cake.png" alt="Birthday Cake" class="cake-png-img" />
         </div>
-    </nav>
-    <section class="hero">
-        <div class="hero-content">
-            <div class="hero-logo-main"><img src="images/Sonar Bangla Lunchbox1.jpeg" alt="Sonar Bangla Lunchbox Logo"></div>
-            <h1>সোনার বাংলা</h1>
-            <p class="subtitle">লাঞ্চবক্স</p>
-            <p class="tagline">"ঘরের মতো ভালোবাসা ভরা খাবার"</p>
-            <p class="tagline-en">(Food filled with love, just like home)</p>
-            <div class="badges">
-                <div class="badge"><i class="fas fa-home"></i> ঘরের মতো</div>
-                <div class="badge"><i class="fas fa-leaf"></i> তাজা</div>
-                <div class="badge"><i class="fas fa-shield-halved"></i> পরিষ্কার</div>
-            </div>
-            <a href="https://wa.me/919907846767" class="cta-btn" target="_blank"><i class="fab fa-whatsapp"></i> আজই আপনার টিফিন বুক করুন</a>
-        </div>
-        <div class="scroll-down" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})"><i class="fas fa-chevron-down"></i></div>
+
+        <h1 class="calligraphy-title" id="opening-heading">Happy Birthday, Didi! ❤️</h1>
+        <p class="serif-subtitle" id="opening-subtitle">A special birthday surprise made just for you…</p>
+        
+        <button class="tactile-btn" id="btn-open-surprise">
+          <span>Open Your Surprise ✨</span>
+        </button>
+      </div>
     </section>
-    <section class="features" id="features">
-        <div class="container">
-            <div class="section-title fade-in"><h2>কেন সোনার বাংলা?</h2><p>আমরা আপনার দৈনিক খাবারের চিন্তা দূর করি যত্ন সহকারে</p></div>
-            <div class="features-grid">
-                <div class="feature-card fade-in"><div class="feature-icon"><i class="fas fa-utensils"></i></div><h3>ঘরের স্বাদে রান্না</h3><p>আপনার মায়ের রান্নাঘরের মতোই ভালোবাসা দিয়ে তৈরি স্বাদের খাবার</p></div>
-                <div class="feature-card fade-in"><div class="feature-icon"><i class="fas fa-clock"></i></div><h3>সময় বাঁচান</h3><p>আর চিন্তা নেই কী রান্না করবেন। আমরা প্রতিদিন তাজা খাবার আপনার দরজায় পৌঁছে দিই</p></div>
-                <div class="feature-card fade-in"><div class="feature-icon"><i class="fas fa-child"></i></div><h3>বাচ্চাদের জন্য আদর্শ</h3><p>পুষ্টিকর, সুষম খাবার বিশেষভাবে স্কুলের বাচ্চাদের এবং কর্মজীবী মানুষের জন্য</p></div>
-                <div class="feature-card fade-in"><div class="feature-icon"><i class="fas fa-calendar-check"></i></div><h3>প্রতিদিন নতুন মেনু</h3><p>সপ্তাহের প্রতিটি দিন আলাদা মেনু। একঘেয়েমি নেই, শুধুই সুস্বাদু আনন্দ!</p></div>
-            </div>
+
+    <!-- ====================================================================
+         SCENE 2: POP THE BALLOON
+         ==================================================================== -->
+    <section class="scene-layer" id="scene-2">
+      <div class="scene-natural-stage">
+        <h2 class="serif-subtitle" id="balloon-prompt" style="font-size: 1.35rem; margin-bottom: 4px;">Let’s start the celebration… 🎈</h2>
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 12px;" id="balloon-hint">Tap the balloon to pop it!</p>
+
+        <div class="balloon-stage" id="balloon-stage">
+          <svg class="balloon-svg-box" id="balloon-svg-box" viewBox="0 0 120 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="balloonGrad" cx="35%" cy="35%" r="65%">
+                <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9"/>
+                <stop offset="15%" stop-color="#fda4af"/>
+                <stop offset="60%" stop-color="#f43f5e"/>
+                <stop offset="100%" stop-color="#be123c"/>
+              </radialGradient>
+            </defs>
+            <path d="M60 10 C25 10 10 40 10 75 C10 115 50 135 60 140 C70 135 110 115 110 75 C110 40 95 10 60 10 Z" fill="url(#balloonGrad)"/>
+            <ellipse cx="40" cy="45" rx="14" ry="24" transform="rotate(-25 40 45)" fill="#ffffff" fill-opacity="0.5"/>
+            <polygon points="56,140 64,140 67,147 53,147" fill="#be123c"/>
+          </svg>
+          <div class="balloon-string-svg" id="balloon-string-svg"></div>
+          <div class="balloon-pop-burst" id="balloon-pop-burst">Yay! 🎉</div>
         </div>
+      </div>
     </section>
-    <section class="menu-section" id="menu">
-        <div class="container">
-            <div class="section-title fade-in"><h2>সাপ্তাহিক মেনু</h2><p>তাজা ও সুস্বাদু খাবার, MONDAY TO SATURDAY | কার্ডে ক্লিক করে বিস্তারিত দেখুন!</p></div>
-            <div class="menu-grid">
-                <div class="menu-card fade-in" onclick="openModal('monday')">
-                    <div class="click-hint"><i class="fas fa-hand-pointer"></i> বিস্তারিত দেখুন</div>
-                    <div class="menu-img" style="background: linear-gradient(135deg, #e8f5e0, #d4edda);">
-                        <img src="https://kimi-web-img.moonshot.cn/img/www.indianhealthyrecipes.com/ddba47b59e62c39fce46f79b90b19645853c797b.jpg" alt="Egg Fried Rice">
-                        <div class="day-badge mon">MONDAY</div>
-                    </div>
-                    <div class="menu-info">
-                        <h3>Egg Fried Rice</h3><p class="bengali-name">এগ ফ্রাইড রাইস</p>
-                        <p class="desc">সুগন্ধি ভাত ডিম, তাজা সবজি এবং হালকা মসলা দিয়ে ভাজা - সপ্তাহের সেরা শুরু!</p>
-                        <div class="menu-tags"><span class="tag">🥚 ডিম</span><span class="tag">🍚 ভাত</span><span class="tag">🥕 সবজি</span></div>
-                    </div>
-                </div>
-                <div class="menu-card fade-in" onclick="openModal('tuesday')">
-                    <div class="click-hint"><i class="fas fa-hand-pointer"></i> বিস্তারিত দেখুন</div>
-                    <div class="menu-img" style="background: linear-gradient(135deg, #fff3e0, #ffe0b2);">
-                        <img src="https://kimi-web-img.moonshot.cn/img/www.indianhealthyrecipes.com/e4f3182e0199ff824e20f1821f3a3e43be7cb2b6.jpg" alt="Alu Paratha">
-                        <div class="day-badge tue">TUESDAY</div>
-                    </div>
-                    <div class="menu-info">
-                        <h3>Alu Paratha</h3><p class="bengali-name">আলু পরোটা</p>
-                        <p class="desc">নরম, তুলতুলে পরোটা মসলাদার আলুর পুরে ভরা, দই এবং আচার সহ পরিবেশিত</p>
-                        <div class="menu-tags"><span class="tag">🥔 আলু</span><span class="tag">🫓 রুটি</span><span class="tag">🥛 দই</span></div>
-                    </div>
-                </div>
-                <div class="menu-card fade-in" onclick="openModal('wednesday')">
-                    <div class="click-hint"><i class="fas fa-hand-pointer"></i> বিস্তারিত দেখুন</div>
-                    <div class="menu-img" style="background: linear-gradient(135deg, #fce4ec, #f8bbd0);">
-                        <img src="https://kimi-web-img.moonshot.cn/img/foodtrails25.com/8d9935d449c4086ad5ba40ab84f9e5157cc76ab6.jpg" alt="Fresh Fruit">
-                        <div class="day-badge wed">WEDNESDAY</div>
-                    </div>
-                    <div class="menu-info">
-                        <h3>Fresh Fruit</h3><p class="bengali-name">তাজা ফল</p>
-                        <p class="desc">মৌসুমি ফলের তাজা মিশ্রণ - কোনো মসলা বা চাট মসলা ছাড়াই, শুধুই প্রাকৃতিক সুস্বাদু ফল!</p>
-                        <div class="menu-tags"><span class="tag">🍎 ফল</span><span class="tag">🌿 স্বাস্থ্যকর</span><span class="tag">🍇 প্রাকৃতিক</span></div>
-                    </div>
-                </div>
-                <div class="menu-card fade-in" onclick="openModal('thursday')">
-                    <div class="click-hint"><i class="fas fa-hand-pointer"></i> বিস্তারিত দেখুন</div>
-                    <div class="menu-img" style="background: linear-gradient(135deg, #e3f2fd, #bbdefb);">
-                        <img src="https://kimi-web-img.moonshot.cn/img/myfoodstory.com/bfc707fad2b788e4ed7ad4d0138dd6c77aefe669.jpg" alt="Chicken Chowmein">
-                        <div class="day-badge thu">THURSDAY</div>
-                    </div>
-                    <div class="menu-info">
-                        <h3>Chicken Chowmein</h3><p class="bengali-name">চিকেন চাউমিন</p>
-                        <p class="desc">নরম মুরগির মাংস, কুচকুচে সবজি এবং সুস্বাদু সস দিয়ে ভাজা নুডলস</p>
-                        <div class="menu-tags"><span class="tag">🍗 মুরগি</span><span class="tag">🍜 নুডলস</span><span class="tag">🌶️ ঝাল</span></div>
-                    </div>
-                </div>
-                <div class="menu-card fade-in" onclick="openModal('friday')">
-                    <div class="click-hint"><i class="fas fa-hand-pointer"></i> বিস্তারিত দেখুন</div>
-                    <div class="menu-img" style="background: linear-gradient(135deg, #f3e5f5, #e1bee7);">
-                        <img src="https://kimi-web-img.moonshot.cn/img/www.tomatoblues.com/4b8b471efa5c3a9a01298d456719d655a09a57e6.jpg" alt="Veg Pulao">
-                        <div class="day-badge fri">FRIDAY</div>
-                    </div>
-                    <div class="menu-info">
-                        <h3>Veg Pulao</h3><p class="bengali-name">ভেজ পোলাও</p>
-                        <p class="desc">সুগন্ধি বাসমতি ভাত মিশ্র সবজি এবং গোটা মসলা দিয়ে রান্না, ভাজা পেঁয়াজ দিয়ে সাজানো</p>
-                        <div class="menu-tags"><span class="tag">🍚 ভাত</span><span class="tag">🥗 শাকসবজি</span><span class="tag">🌿 সুগন্ধি</span></div>
-                    </div>
-                </div>
-                <div class="menu-card fade-in" onclick="openModal('saturday')">
-                    <div class="click-hint"><i class="fas fa-hand-pointer"></i> বিস্তারিত দেখুন</div>
-                    <div class="menu-img" style="background: linear-gradient(135deg, #ffebee, #ffcdd2);">
-                        <img src="https://kimi-web-img.moonshot.cn/img/www.yellowblissroad.com/635fdee15849fece18cbcedab86df4ea2312c96d.jpg" alt="Pasta">
-                        <div class="day-badge sat">SATURDAY</div>
-                    </div>
-                    <div class="menu-info">
-                        <h3>Pasta</h3><p class="bengali-name">পাস্তা</p>
-                        <p class="desc">ক্রিমি পাস্তা সবজি এবং টমেটো-ভিত্তিক ঘন সসে, নরম এবং সুস্বাদু</p>
-                        <div class="menu-tags"><span class="tag">🍝 পাস্তা</span><span class="tag">🥕 সবজি</span><span class="tag">🧀 ক্রিমি</span></div>
-                    </div>
-                </div>
-            </div>
+
+    <!-- ====================================================================
+         SCENE 3: MAKE A WISH (birthday_cake.png & Candle)
+         ==================================================================== -->
+    <section class="scene-layer" id="scene-3">
+      <div class="scene-natural-stage">
+        <h2 class="serif-subtitle" id="cake-prompt" style="font-size: 1.4rem; margin-bottom: 4px;">Make a wish for Didi… ✨</h2>
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 8px;" id="cake-hint">Tap the glowing candle to blow it out 🕯️</p>
+
+        <div class="cake-wish-stage" id="cake-wish-stage">
+          <div class="cake-wish-container">
+            <div class="candle-flame-real" id="candle-flame-real"></div>
+            <div class="candle-smoke-puff" id="candle-smoke-puff">💨</div>
+            <img src="assets/birthday_cake.png" alt="Birthday Cake" class="cake-wish-img" />
+          </div>
         </div>
+
+        <div class="wish-reveal-box" id="wish-reveal-box">
+          <p class="serif-subtitle" id="wish-text" style="color: var(--color-primary); margin-bottom: 6px;">May all your silent prayers, biggest dreams, and quiet wishes come true this year. 🌟</p>
+          <button class="tactile-btn" id="btn-wish-next">
+            <span>Next Surprise 🌸 →</span>
+          </button>
+        </div>
+      </div>
     </section>
-    <div class="modal-overlay" id="foodModal" onclick="closeModal(event)">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <div class="modal-header"><img id="modalImg" src="" alt=""><button class="modal-close" onclick="closeModal()">&times;</button></div>
-            <div class="modal-body">
-                <h2 class="modal-title" id="modalTitle"></h2>
-                <p class="modal-bengali" id="modalBengali"></p>
-                <div class="modal-section"><div class="modal-section-title"><i class="fas fa-list-check"></i> উপকরণ (Ingredients)</div><div class="ingredients-list" id="modalIngredients"></div></div>
-                <div class="modal-section"><div class="modal-section-title"><i class="fas fa-chart-pie"></i> পুষ্টি তথ্য (Nutrition)</div><div class="nutrition-box" id="modalNutrition"></div></div>
-                <div class="modal-section"><div class="modal-section-title"><i class="fas fa-circle-info"></i> তথ্য (Details)</div><div class="info-row" id="modalPrepTime"></div><div class="info-row" id="modalServing"></div></div>
-                <div class="modal-section"><div class="special-note" id="modalSpecial"></div></div>
-                <div class="modal-cta">
-                    <a href="https://wa.me/919907846767" class="btn-whatsapp" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp-এ অর্ডার করুন</a>
-                    <a href="tel:+919907846767" class="btn-call"><i class="fas fa-phone"></i> কল করুন</a>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <!-- Order Options Modal -->
-    <div class="modal-overlay" id="orderModal" onclick="closeOrderModal(event)">
-        <div class="modal-content order-modal-content" onclick="event.stopPropagation()">
-            <div class="modal-body order-modal-body">
-                <button class="modal-close" onclick="closeOrderModal()">&times;</button>
-                <h2 class="order-modal-title">অর্ডার করুন</h2>
-                <p class="order-modal-plan" id="orderModalPlanName"></p>
-                <div style="margin-top: 2rem;">
-                    <a href="https://wa.me/919907846767" id="orderWhatsappBtn" class="btn-order-whatsapp" target="_blank" onclick="event.stopPropagation()">
-                        <i class="fab fa-whatsapp"></i> WhatsApp-এ অর্ডার করুন
-                    </a>
-                    <a href="tel:+919907846767" class="btn-order-call">
-                        <i class="fas fa-phone"></i> কল করুন
-                    </a>
-                </div>
-                <p style="margin-top: 1.5rem; font-size: 0.85rem; color: var(--text-light);">
-                    যেকোনো একটি অপশন বেছে নিন
-                </p>
-            </div>
-        </div>
-    </div>
+    <!-- ====================================================================
+         SCENE 4: FLOWER REVEAL (flower_bouquet.png)
+         ==================================================================== -->
+    <section class="scene-layer" id="scene-4">
+      <div class="scene-natural-stage">
+        <p class="serif-subtitle" id="bouquet-quote" style="font-size: 1.3rem; line-height: 1.6; margin-bottom: 14px;">
+          For the sister who makes life a little more beautiful. 🌸
+        </p>
 
-    <section class="pricing-section" id="pricing">
-        <div class="container">
-            <div class="section-title fade-in"><h2>সুলভ মূল্য</h2><p>পকেট-বান্ধব দামে ঘরের মতো খাবার</p></div>
-            <div class="price-highlight fade-in">
-                <span class="currency">₹</span><span class="amount">20</span><span class="period">মাত্র প্রতি দিন</span>
-            </div>
-            <p style="color: rgba(255,255,255,0.8); margin-bottom: 0.5rem; font-size: 1.2rem; font-family: 'Noto Sans Bengali', sans-serif;">বাড়ির চিন্তা কম, বাচ্চার পুষ্টি বেশি</p>
-            <p style="color: rgba(255,255,255,0.6); font-size: 0.9rem; margin-bottom: 2rem;">(Less worry, more savings for your child)</p>
-            <div class="plans-grid">
-                <div class="plan-card fade-in" onclick="openOrderModal('বেসিক প্ল্যান')">
-                    <h3>বেসিক প্ল্যান</h3><div class="plan-price">₹599</div><p style="color: rgba(255,255,255,0.7); font-size: 0.9rem;">প্রতি মাস</p>
-                    <ul><li><i class="fas fa-check"></i> প্রতিদিন তাজা টিফিন</li><li><i class="fas fa-check"></i> সোমবার থেকে শনিবার</li><li><i class="fas fa-check"></i> স্ট্যান্ডার্ড পরিমাণ</li></ul>
-                </div>
-                <div class="plan-card featured fade-in" onclick="openOrderModal('স্ট্যান্ডার্ড প্ল্যান')">
-                    <h3>স্ট্যান্ডার্ড প্ল্যান</h3><div class="plan-price">₹699</div><p style="color: rgba(255,255,255,0.7); font-size: 0.9rem;">প্রতি মাস</p>
-                    <ul><li><i class="fas fa-check"></i> প্রতিদিন তাজা টিফিন</li><li><i class="fas fa-check"></i> সোমবার থেকে শনিবার</li><li><i class="fas fa-check"></i> বেশি পরিমাণ</li><li><i class="fas fa-check"></i> বিশেষ সপ্তাহান্তে উপহার</li></ul>
-                </div>
-            </div>
-            <div style="margin-top: 3rem; display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem;">
-                <div style="display: flex; align-items: center; gap: 0.5rem; color: rgba(255,255,255,0.9);"><i class="fas fa-check-circle" style="color: var(--accent);"></i><span>ঘরের মতো খাবার</span></div>
-                <div style="display: flex; align-items: center; gap: 0.5rem; color: rgba(255,255,255,0.9);"><i class="fas fa-check-circle" style="color: var(--accent);"></i><span>কোনো কৃত্রিম রং নেই</span></div>
-                <div style="display: flex; align-items: center; gap: 0.5rem; color: rgba(255,255,255,0.9);"><i class="fas fa-check-circle" style="color: var(--accent);"></i><span>পরিষ্কার প্যাকেজিং</span></div>
-                <div style="display: flex; align-items: center; gap: 0.5rem; color: rgba(255,255,255,0.9);"><i class="fas fa-check-circle" style="color: var(--accent);"></i><span>মাসিক প্ল্যানার সহ</span></div>
-            </div>
+        <div class="bouquet-png-stage">
+          <img src="assets/flower_bouquet.png" alt="Flower Bouquet" class="bouquet-png-img" />
         </div>
+
+        <button class="tactile-btn" id="btn-bouquet-next">
+          <span>I have something for you… 💌 →</span>
+        </button>
+      </div>
     </section>
-    <section class="why-us">
-        <div class="container">
-            <div class="section-title fade-in"><h2>আমাদের প্রতিশ্রুতি</h2><p>আমরা আপনার বাচ্চার স্বাস্থ্য এবং আপনার মনের শান্তি নিয়ে চিন্তা করি</p></div>
-            <div class="benefits-grid">
-                <div class="benefit-item fade-in"><i class="fas fa-shield-halved"></i><div><h4>পরিচ্ছন্নতা প্রথম</h4><p>কঠোর পরিচ্ছন্নতা নিয়ম মেনে পরিষ্কার রান্নাঘরে রান্না করা হয়</p></div></div>
-                <div class="benefit-item fade-in"><i class="fas fa-motorcycle"></i><div><h4>দ্রুত ডেলিভারি</h4><p>আমাদের নিজস্ব ডেলিভারি টিম দিয়ে স্কুল বা বাড়িতে সময়মতো পৌঁছে দেওয়া হয়</p></div></div>
-                <div class="benefit-item fade-in"><i class="fas fa-heart-pulse"></i><div><h4>পুষ্টিকর ও সুষম</h4><p>প্রতিটি খাবারে কার্বোহাইড্রেট + প্রোটিন + ভিটামিন থাকে</p></div></div>
-                <div class="benefit-item fade-in"><i class="fas fa-calendar-days"></i><div><h4>সাপ্তাহিক মেনু প্ল্যান</h4><p>প্রতিদিন কী খাবার আসবে তা আগেই জানুন - কোনো অপ্রত্যাশিত কিছু নেই!</p></div></div>
-                <div class="benefit-item fade-in"><i class="fas fa-gift"></i><div><h4>বিশেষ সুবিধা</h4><p>স্কুল, কোচিং, কোচিং সেন্টার ও অফিসের জন্য বিশেষ সুবিধা</p></div></div>
-                <div class="benefit-item fade-in"><i class="fas fa-hand-holding-heart"></i><div><h4>ভালোবাসা দিয়ে তৈরি</h4><p>প্রতিটি খাবার যত্ন ও স্নেহ দিয়ে প্রস্তুত করা হয়</p></div></div>
-            </div>
+
+    <!-- ====================================================================
+         SCENE 5: REALISTIC ENVELOPE OPENING (sealed -> opened)
+         ==================================================================== -->
+    <section class="scene-layer" id="scene-5">
+      <div class="scene-natural-stage">
+        <h2 class="serif-subtitle" id="envelope-prompt" style="font-size: 1.35rem; margin-bottom: 4px;">There’s something I wanted to tell you… 💌</h2>
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 10px;" id="envelope-hint">Tap the envelope to open</p>
+
+        <!-- Dynamic Envelope Opening Stage -->
+        <div class="envelope-png-stage" id="envelope-png-stage">
+          <img src="assets/sealed_envelope.png" alt="Sealed Envelope" class="envelope-png-img envelope-sealed-png" id="envelope-sealed-img" />
+          <img src="assets/opened_envelope.png" alt="Opened Envelope" class="envelope-png-img envelope-opened-png" id="envelope-opened-img" />
         </div>
+      </div>
     </section>
-    <section class="contact-section" id="contact">
-        <div class="contact-grid">
-            <div class="contact-block">
-                <h3><i class="fas fa-phone"></i> যোগাযোগ করুন</h3>
-                <a href="tel:+919907846767" class="contact-item"><i class="fas fa-phone"></i><div class="info"><h4>Phone / WhatsApp</h4><p>+91 99078 46767</p></div></a>
-                <a href="https://wa.me/919907846767" class="contact-item" target="_blank"><i class="fab fa-whatsapp"></i><div class="info"><h4>WhatsApp Order</h4><p>Click to chat and book your order</p></div></a>
-            </div>
-            <div class="contact-block">
-                <h3><i class="fas fa-location-dot"></i> ঠিকানা</h3>
-                <a href="https://www.google.com/maps/search/?api=1&query=Nagar,+Khargram,+Murshidabad,+West+Bengal,+India+742159" class="contact-item" target="_blank"><i class="fas fa-map-marker-alt"></i><div class="info"><h4>Address</h4><p> Nager, Khargram<br>Murshidabad, West Bengal<br>India - 742159</p></div></a>
-                <div class="contact-item" style="cursor: default;"><i class="fas fa-motorcycle"></i><div class="info"><h4>Delivery Area</h4><p> Nager, Khargram and surrounding areas</p></div></div>
-            </div>
-            <div class="contact-block">
-                <h3><i class="fas fa-share-nodes"></i> আমাদের অনুসরণ করুন</h3>
-                <p style="color: rgba(255,255,255,0.7); margin-bottom: 1rem; font-size: 0.95rem;">দৈনিক মেনু এবং বিশেষ অফারের আপডেট পেতে!</p>
-                <div class="social-links">
-                    <a href="https://www.instagram.com/sonarbanglalunchbox.in/" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="https://wa.me/919907846767" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                    <a href="tel:+919907846767" title="Call Us"><i class="fas fa-phone"></i></a>
-                </div>
-            </div>
+
+    <!-- ====================================================================
+         SCENE 6: PHYSICAL STATIONERY LETTER (TYPEWRITER REVEAL)
+         ==================================================================== -->
+    <section class="scene-layer" id="scene-6">
+      <div class="scene-natural-stage" style="max-height: 90dvh;">
+        <div class="stationery-letter-card" id="stationery-letter-card">
+          <img src="assets/letter_card.png" alt="Letter Accent" class="stationery-floral-accent" />
+          <h3 class="stationery-heading" id="stationery-heading">A little letter for my Didi 💗</h3>
+          
+          <div class="typewriter-content-box">
+            <span id="typewriter-text"></span><span class="typing-cursor" id="typing-cursor"></span>
+          </div>
         </div>
-        <div class="footer-bottom">
-            <p>Made with Love <span class="heart">❤️</span> Sonar Bangla Lunchbox</p>
-            <p style="margin-top: 0.5rem; font-size: 0.85rem;">Home made delicious food.</p>
-            <p style="margin-top: 1rem; color: rgba(255,255,255,0.4); font-size: 0.8rem;">© 2026 Sonar Bangla Lunchbox. All rights reserved.</p>
-        </div>
+
+        <button class="tactile-btn" id="btn-letter-next" style="display: none;">
+          <span>One Last Thing 🎂 →</span>
+        </button>
+      </div>
     </section>
-    <div class="floating-cta">
-        <a href="https://wa.me/919907846767" class="float-btn whatsapp" target="_blank" title="হোয়াটসঅ্যাপে অর্ডার করুন"><i class="fab fa-whatsapp"></i></a>
-        <a href="tel:+919907846767" class="float-btn call" title="এখনই কল করুন"><i class="fas fa-phone"></i></a>
-    </div>
-    <script>
-        const ingredientImages = {
-            "Basmati Rice": "https://www.themealdb.com/images/ingredients/Rice.png",
-            "Eggs": "https://www.themealdb.com/images/ingredients/Egg.png",
-            "Carrots": "https://www.themealdb.com/images/ingredients/Carrot.png",
-            "French Beans": "https://www.themealdb.com/images/ingredients/Green%20Beans.png",
-            "Sweet Corn": "https://img.spoonacular.com/ingredients_100x100/corn.png",
-            "Onions": "https://www.themealdb.com/images/ingredients/Onion.png",
-            "Garlic": "https://www.themealdb.com/images/ingredients/Garlic.png",
-            "Soybean Oil": "https://www.themealdb.com/images/ingredients/Vegetable%20Oil.png",
-            "Coriander Leaves": "https://www.themealdb.com/images/ingredients/Coriander.png",
-            "Light Spices": "https://www.themealdb.com/images/ingredients/garam_masala.png",
-            "Wheat Flour": "https://www.themealdb.com/images/ingredients/Flour.png",
-            "Boiled Potatoes": "https://www.themealdb.com/images/ingredients/Potatoes.png",
-            "Green Chilies": "https://www.themealdb.com/images/ingredients/Green%20Chili.png",
-            "Cumin Powder": "https://www.themealdb.com/images/ingredients/Cumin.png",
-            "Garam Masala": "https://img.spoonacular.com/ingredients_100x100/garam-masala.jpg",
-            "Ghee / Oil": "https://www.themealdb.com/images/ingredients/Ghee.png",
-            "Ghee": "https://www.themealdb.com/images/ingredients/ghee.png",
-            "Salt": "https://www.themealdb.com/images/ingredients/Salt.png",
-            "Curd": "https://img.spoonacular.com/ingredients_100x100/plain-yogurt.jpg",
-            "Pickle": "https://www.themealdb.com/images/ingredients/Dill%20Pickles.png",
-            "Apple": "https://www.themealdb.com/images/ingredients/Apple.png",
-            "Banana": "https://www.themealdb.com/images/ingredients/Banana.png",
-            "Grapes": "https://img.spoonacular.com/ingredients_100x100/red-grapes.jpg",
-            "Orange": "https://www.themealdb.com/images/ingredients/Orange.png",
-            "Mango": "https://www.themealdb.com/images/ingredients/Mango.png",
-            "Watermelon": "https://img.spoonacular.com/ingredients_100x100/watermelon.png",
-            "Pear": "https://img.spoonacular.com/ingredients_100x100/pear.jpg",
-            "Strawberry": "https://img.spoonacular.com/ingredients_100x100/strawberries.png",
-            "Lemon": "https://www.themealdb.com/images/ingredients/Lemon.png",
-            "Mint Leaves": "https://www.themealdb.com/images/ingredients/Mint.png",
-            "Noodles": "https://www.themealdb.com/images/ingredients/udon_noodles.png",
-            "Chicken Breast": "https://www.themealdb.com/images/ingredients/Chicken.png",
-            "Cabbage": "https://www.themealdb.com/images/ingredients/Cabbage.png",
-            "Capsicum": "https://www.themealdb.com/images/ingredients/green_pepper.png",
-            "Soy Sauce": "https://www.themealdb.com/images/ingredients/Soy%20Sauce.png",
-            "Tomato Sauce": "https://www.themealdb.com/images/ingredients/Tomato%20Sauce.png",
-            "Green Peas": "https://www.themealdb.com/images/ingredients/Peas.png",
-            "Bay Leaves": "https://www.themealdb.com/images/ingredients/Bay%20Leaf.png",
-            "Cinnamon": "https://www.themealdb.com/images/ingredients/Cinnamon.png",
-            "Cardamom": "https://www.themealdb.com/images/ingredients/Cardamom.png",
-            "Cloves": "https://www.themealdb.com/images/ingredients/Cloves.png",
-            "Turmeric": "https://www.themealdb.com/images/ingredients/Turmeric.png",
-            "Fried Onions": "https://img.spoonacular.com/ingredients_100x100/fried-onions.jpg",
-            "Pasta": "https://www.themealdb.com/images/ingredients/penne_rigate.png",
-            "Fresh Tomatoes": "https://www.themealdb.com/images/ingredients/Tomato.png",
-            "Cheese": "https://www.themealdb.com/images/ingredients/Cheese.png",
-            "Fresh Cream": "https://www.themealdb.com/images/ingredients/heavy_cream.png",
-            "Oregano": "https://img.spoonacular.com/ingredients_100x100/oregano.jpg",
-            "Chili Flakes": "https://img.spoonacular.com/ingredients_100x100/chili-flakes.jpg",
-            "Salt & Pepper": "https://img.spoonacular.com/ingredients_100x100/salt-and-pepper.jpg"
-        };
 
-        const menuData = {
-            monday: {
-                title: "Egg Fried Rice",
-                bengali: "এগ ফ্রাইড রাইস",
-                img: "https://kimi-web-img.moonshot.cn/img/www.indianhealthyrecipes.com/ddba47b59e62c39fce46f79b90b19645853c797b.jpg",
-                ingredients: ["বাসমতি ভাত (Basmati Rice)","ডিম (Eggs)","গাজর (Carrots)","বরবটি (French Beans)","সুইট কর্ন (Sweet Corn)","পেঁয়াজ (Onions)","রসুন (Garlic)","সয়াবিন তেল (Soybean Oil)","ধনেপাতা (Coriander Leaves)","হালকা মশলা (Light Spices)"],
-                nutrition: "ক্যালরি: ~450 | প্রোটিন: 18g | কার্ব: 55g | ফ্যাট: 15g",
-                prepTime: "তৈরির সময়: 30 মিনিট",
-                serving: "পরিবেশন: গরম গরম, দই বা আচার সহ",
-                special: "✨ বিশেষত্ব: সপ্তাহের শুরুতে এনার্জি দেওয়ার জন্য পুষ্টিকর ডিম ও সবজি দিয়ে তৈরি। কোনো কৃত্রিম রং বা মোনোসোডিয়াম গ্লুটামেট (MSG) ব্যবহার করা হয় না।"
-            },
-            tuesday: {
-                title: "Alu Paratha",
-                bengali: "আলু পরোটা",
-                img: "https://kimi-web-img.moonshot.cn/img/www.indianhealthyrecipes.com/e4f3182e0199ff824e20f1821f3a3e43be7cb2b6.jpg",
-                ingredients: ["গমের আটা (Wheat Flour)","সিদ্ধ আলু (Boiled Potatoes)","ধনেপাতা (Coriander Leaves)","কাঁচা লঙ্কা (Green Chilies)","জিরে গুঁড়ো (Cumin Powder)","গরম মশলা (Garam Masala)","ঘি / তেল (Ghee / Oil)","লবণ (Salt)","দই (Curd - সহ)","আচার (Pickle - সহ)"],
-                nutrition: "ক্যালরি: ~400 | প্রোটিন: 10g | কার্ব: 60g | ফ্যাট: 14g",
-                prepTime: "তৈরির সময়: 45 মিনিট",
-                serving: "পরিবেশন: গরম গরম, দই ও আচার সহ",
-                special: "✨ বিশেষত্ব: মায়ের হাতের মতো নরম, তুলতুলে পরোটা। মসলাদার আলুর পুরে ভর্তি, ঘি দিয়ে ভাজা। দই ও আচার সহ পরিবেশিত।"
-            },
-            wednesday: {
-                title: "Fresh Fruit",
-                bengali: "তাজা ফল",
-                img: "https://kimi-web-img.moonshot.cn/img/foodtrails25.com/8d9935d449c4086ad5ba40ab84f9e5157cc76ab6.jpg",
-                ingredients: ["আপেল (Apple)","কলা (Banana)","আঙুর (Grapes)","কমলালেবু (Orange)","আম (Mango - ঋতু অনুযায়ী)","তরমুজ (Watermelon - ঋতু অনুযায়ী)","নাশপাতি (Pear)","স্ট্রবেরি (Strawberry - ঋতু অনুযায়ী)","লেবু (Lemon - স্বাদের জন্য)","পুদিনা পাতা (Mint Leaves - সাজানোর জন্য)"],
-                nutrition: "ক্যালরি: ~200 | প্রোটিন: 2g | কার্ব: 50g | ফ্যাট: 0g | ভিটামিন C: প্রচুর",
-                prepTime: "তৈরির সময়: 15 মিনিট",
-                serving: "পরিবেশন: ঠান্ডা, পরিষ্কার কাটা",
-                special: "✨ বিশেষত্ব: মাঝ সপ্তাহে হালকা ও স্বাস্থ্যকর। কোনো মসলা বা চাট মসলা ছাড়াই শুধুই প্রাকৃতিক সুস্বাদু ফল। ঋতু অনুযায়ী মৌসুমি ফল পরিবেশিত হয়।"
-            },
-            thursday: {
-                title: "Chicken Chowmein",
-                bengali: "চিকেন চাউমিন",
-                img: "https://kimi-web-img.moonshot.cn/img/myfoodstory.com/bfc707fad2b788e4ed7ad4d0138dd6c77aefe669.jpg",
-                ingredients: ["নুডলস (Noodles)","মুরগির মাংস (Chicken Breast)","বাঁধাকপি (Cabbage)","গাজর (Carrots)","ক্যাপসিকাম (Capsicum)","পেঁয়াজ (Onions)","রসুন (Garlic)","সয়া সস (Soy Sauce)","টোমেটো সস (Tomato Sauce)","হালকা মশলা (Light Spices)","ধনেপাতা (Coriander Leaves - সাজানোর জন্য)"],
-                nutrition: "ক্যালরি: ~480 | প্রোটিন: 25g | কার্ব: 50g | ফ্যাট: 18g",
-                prepTime: "তৈরির সময়: 35 মিনিট",
-                serving: "পরিবেশন: গরম গরম, টমেটো সস সহ",
-                special: "✨ বিশেষত্ব: নরম মুরগির মাংস ও কুচকুচে সবজি দিয়ে তৈরি। ঝাল স্বাদে প্রিয়। কোনো কৃত্রিম রং ব্যবহার করা হয় না।"
-            },
-            friday: {
-                title: "Veg Pulao",
-                bengali: "ভেজ পোলাও",
-                img: "https://kimi-web-img.moonshot.cn/img/www.tomatoblues.com/4b8b471efa5c3a9a01298d456719d655a09a57e6.jpg",
-                ingredients: ["বাসমতি ভাত (Basmati Rice)","গাজর (Carrots)","বরবটি (French Beans)","মটরশুটি (Green Peas)","পেঁয়াজ (Onions)","রসুন (Garlic)","তেজপাতা (Bay Leaves)","দারচিনি (Cinnamon)","এলাচ (Cardamom)","লবঙ্গ (Cloves)","ঘি (Ghee)"," লবণ (Salt)","ভাজা পেঁয়াজ (Fried Onions - সাজানোর জন্য)"],
-                nutrition: "ক্যালরি: ~420 | প্রোটিন: 10g | কার্ব: 65g | ফ্যাট: 12g",
-                prepTime: "তৈরির সময়: 40 মিনিট",
-                serving: "পরিবেশন: গরম গরম, রাইতা বা দই সহ",
-                special: "✨ বিশেষত্ব: গোটা মসলা ও ঘি দিয়ে সুগন্ধি বাসমতি ভাতে রান্না। ভাজা পেঁয়াজ দিয়ে সাজানো। সপ্তাহান্তের বিশেষ আয়োজন!"
-            },
-            saturday: {
-                title: "Pasta",
-                bengali: "পাস্তা",
-                img: "https://kimi-web-img.moonshot.cn/img/www.yellowblissroad.com/635fdee15849fece18cbcedab86df4ea2312c96d.jpg",
-                ingredients: ["পাস্তা (Pasta)","টমেটো (Fresh Tomatoes)","পেঁয়াজ (Onions)","রসুন (Garlic)","গাজর (Carrots)","ক্যাপসিকাম (Capsicum)","টমেটো সস (Tomato Sauce)","চিজ (Cheese - স্প্রিংকল)","ক্রিম (Fresh Cream)","ওরেগানো (Oregano)","চিলি ফ্লেকস (Chili Flakes)","লবণ ও মরিচ (Salt & Pepper)"],
-                nutrition: "ক্যালরি: ~460 | প্রোটিন: 16g | কার্ব: 58g | ফ্যাট: 18g",
-                prepTime: "তৈরির সময়: 30 মিনিট",
-                serving: "পরিবেশন: গরম গরম, চিজ স্প্রিংকল সহ",
-                special: "✨ বিশেষত্ব: সপ্তাহের শেষ দিনের বিশেষ আয়োজন। ক্রিমি টমেটো-ভিত্তিক সসে নরম পাস্তা। চিজ স্প্রিংকল ও ওরেগানো দিয়ে সাজানো। বাচ্চাদের বিশেষ পছন্দ!"
-            }
-        };
+    <!-- ====================================================================
+         SCENE 7: FINAL BIRTHDAY SCENE (Sister's Photo in Elegant Frame)
+         ==================================================================== -->
+    <section class="scene-layer" id="scene-7">
+      <div class="scene-natural-stage final-stage-container">
+        
+        <!-- Elegant Premium Birthday Photo Frame -->
+        <div class="final-photo-frame-wrapper" id="photo-frame-wrapper">
+          <div class="final-photo-frame">
+            <div class="photo-matting">
+              <img src="assets/SISTER PHOTO.jpg" alt="Didi" class="sister-photo-img" id="sister-photo-img" />
+            </div>
+            <!-- Delicate aesthetic corner decorations -->
+            <span class="frame-corner-decor frame-decor-tl">🌸</span>
+            <span class="frame-corner-decor frame-decor-br">✨</span>
+          </div>
+        </div>
 
-        function openModal(day) {
-            const data = menuData[day];
-            if (!data) return;
-            document.getElementById('modalImg').src = data.img;
-            document.getElementById('modalTitle').textContent = data.title;
-            document.getElementById('modalBengali').textContent = data.bengali;
-            
-            const ingredientsHTML = data.ingredients.map(ingredient => {
-                const enNameMatch = ingredient.match(/\((.*?)\)/);
-                const enName = enNameMatch ? enNameMatch[1].split(' - ')[0] : "";
-                const imgUrl = ingredientImages[enName] || "https://img.icons8.com/color/48/000000/ingredients.png";
-                return `
-                    <div class="ingredient-item">
-                        <img src="${imgUrl}" alt="${enName}" class="ingredient-img" onerror="this.src='https://img.icons8.com/color/48/000000/ingredients.png'">
-                        <span>${ingredient}</span>
-                    </div>
-                `;
-            }).join('');
-            
-            document.getElementById('modalIngredients').innerHTML = ingredientsHTML;
-            document.getElementById('modalNutrition').textContent = data.nutrition;
-            document.getElementById('modalPrepTime').innerHTML = '<i class="fas fa-clock"></i><span>' + data.prepTime + '</span>';
-            document.getElementById('modalServing').innerHTML = '<i class="fas fa-utensils"></i><span>' + data.serving + '</span>';
-            document.getElementById('modalSpecial').textContent = data.special;
-            document.getElementById('foodModal').classList.add('active');
-            document.body.classList.add('modal-open');
-        }
+        <h2 class="calligraphy-title final-heading-reveal" id="final-heading">Happy Birthday, Didi! ❤️</h2>
+        <p class="serif-subtitle final-message-reveal" id="final-message">
+          Thank you for always being there. I’m truly lucky to have you as my sister.
+        </p>
+        <div class="final-signature" id="final-signature">Made with ❤️ by your brother</div>
 
-        function closeModal(e) {
-            if (e && e.target !== document.getElementById('foodModal') && e.target !== document.querySelector('.modal-close')) return;
-            document.getElementById('foodModal').classList.remove('active');
-            document.body.classList.remove('modal-open');
-        }
+        <button class="tactile-btn" id="btn-replay">
+          <span>↺ Replay Surprise</span>
+        </button>
+      </div>
+    </section>
 
-        function openOrderModal(planName) {
-            document.getElementById('orderModalPlanName').textContent = planName;
-            const message = encodeURIComponent(`নমস্কার, আমি সোনার বাংলা লাঞ্চবক্সের "${planName}" সাবস্ক্রাইব করতে চাই। অনুগ্রহ করে আমাকে বিস্তারিত জানাবেন।`);
-            document.getElementById('orderWhatsappBtn').href = `https://wa.me/919907846767?text=${message}`;
-            document.getElementById('orderModal').classList.add('active');
-            document.body.classList.add('modal-open');
-        }
+  </div>
 
-        function closeOrderModal(e) {
-            const modal = document.getElementById('orderModal');
-            if (e && e.target !== modal && !e.target.closest('.modal-close')) return;
-            modal.classList.remove('active');
-            document.body.classList.remove('modal-open');
-        }
-
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closeModal();
-                closeOrderModal();
-            }
-        });
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) navbar.classList.add('scrolled');
-            else navbar.classList.remove('scrolled');
-        });
-
-        const navToggle = document.getElementById('navToggle');
-        const navLinks = document.getElementById('navLinks');
-        navToggle.addEventListener('click', () => navLinks.classList.toggle('active'));
-        document.querySelectorAll('.nav-links a').forEach(link => link.addEventListener('click', () => navLinks.classList.remove('active')));
-
-        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
-        }, observerOptions);
-        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-        document.querySelectorAll('a[href^="#"]:not([href="#"])').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) target.scrollIntoView({ behavior: 'smooth' });
-            });
-        });
-    </script>
+  <!-- Core Scripts -->
+  <script src="config.js"></script>
+  <script src="audio.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
